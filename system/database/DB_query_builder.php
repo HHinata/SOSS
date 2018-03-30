@@ -1461,7 +1461,6 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 		{
 			$this->limit($limit, $offset);
 		}
-
 		$result = $this->query($this->_compile_select());
 		$this->_reset_select();
 		return $result;
@@ -1645,6 +1644,7 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 	 */
 	public function insert($table = '', $set = NULL, $escape = NULL)
 	{
+	   // echo json_encode($table);exit(0);
 		if ($set !== NULL)
 		{
 			$this->set($set, '', $escape);

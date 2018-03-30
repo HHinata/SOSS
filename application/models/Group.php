@@ -13,24 +13,69 @@ class Group extends  CI_Model
         parent::__construct();
         $this->load->database();
     }
+
+    public function get_group_info_by_uid($uid)
+    {
+        $condition = array(
+            'uid'  => $uid,
+            'status' => '1',
+        );
+        $result = $this->db->get_where('groups',$condition);
+        $num = $result->num_rows();
+        if($num != 1){
+            return false;
+        }
+        $info = $result->row_array();
+        $this->show_group($info);
+        return $info;
+    }
+    public function get_group_info_by_gid($gid)
+    {
+        $condition = array(
+            'gid'  => $gid,
+            'status' => '1',
+        );
+        $result = $this->db->get_where('groups',$condition);
+        $num = $result->num_rows();
+        if($num != 1){
+            return false;
+        }
+        $info = $result->row_array();
+        $this->show_group($info);
+        return $info;
+    }
+    public function update_group_info($params)
+    {
+        $info = [];
+        $condition = array();
+        if(isset($params['phone']) && !empty($params['phone'])){
+            $condition['phone'] = $params['phone'];
+        }
+        if(isset($params['address']) && !empty($params['address'])){
+            $condition['address'] = $params['address'];
+        }
+        if(isset($params['gname']) && !empty($params['gname'])){
+            $condition['gname'] = $params['gname'];
+        }
+        if(isset($params['available']) && !empty($params['available'])){
+            $condition['available'] = $params['available'];
+        }
+        if(isset($params['status']) && !empty($params['status'])){
+            $condition['status'] = $params['status'];
+        }
+        $condition['update_time'] = date("Y-m-d H:i:s", time());
+        $where = array(
+            'gid' => $params['gid'],
+        );
+        $this->db->update('groups',$condition,$where);
+        $info = $this->get_group_info_by_gid($params['gid']);
+        return $info;
+    }
+
     public function get_group_info_by_group_id($group_id)
     {
         $condition = array(
             'gid'  => $group_id,
-            'status' => '1',
-        );
-        $result = $this->db->get_where('groups',$condition);
-        $num = $result->db->num_rows();
-        if($num != 1){
-            return false;
-        }
-        $info = $result->db->row_array();
-        return $info;
-    }
-    public function get_group_info_by_phone($phone)
-    {
-        $condition = array(
-            'phone'  => $phone,
             'status' => '1',
         );
         $result = $this->db->get_where('groups',$condition);
@@ -79,33 +124,20 @@ class Group extends  CI_Model
         $this->db->update('group', $condition, $where);
         return $group_id;
     }
-    public function update_group_info($group_id,$param)
-    {
-        $condition = [];
-        if(isset($param['phone'])){
-            $condition['phone'] = $param['phone'];
-        }
-        if(isset($param['group_name'])){
-            $condition['gname'] = $param['group_name'];
-        }
-        if(isset($param['group_pass_word'])){
-            $condition['gpassword'] = $param['group_pass_word'];
-        }
-        if(isset($param['address'])){
-            $condition['address'] = $param['address'];
-        }
-        $condition['update_time'] = date("Y-m-d H:i:s", time());
-        $where     = array(
-            'gid'  => $group_id,
-        );
-        $this->db->update('groups', $condition, $where);
-        $info = $this->get_group_info_by_group_id($group_id);
-        return $info;
-    }
     private static function get_group_id($phone)
     {
         $gid = $phone.time();
         return $gid;
     }
 
+    public function show_group($info)
+    {
+        if(isset($info['create_time'])){
+            unset($info['create_time']);
+        }
+        if(isset($info['update_time'])){
+            unset($info['update_time']);
+        }
+        return $info;
+    }
 }

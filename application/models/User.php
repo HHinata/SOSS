@@ -20,13 +20,28 @@ class User extends  CI_Model
             'status' => '1',
         );
         $result = $this->db->get_where('users',$condition);
-        $num = $result->db->num_rows();
+        $num = $result->num_rows();
         if($num != 1){
             return false;
         }
-        $info = $result->db->row_array();
+        $info = $result->row_array();
         $info = self::show_user_info($info);
         return $info;
+    }
+    public function get_users_info_by_gid($gid)
+    {
+        $condition = array(
+            'group_id'  => $gid,
+            'status' => '1',
+        );
+        $result = $this->db->get_where('users',$condition);
+        if($result->num_rows() == 1){
+            $infos[] = $result->row_array();
+        }else{
+            $infos = $result->result_array();
+        }
+        $infos = self::show_users_info($infos);
+        return $infos;
     }
     public function get_user_info_by_phone($phone)
     {
@@ -35,18 +50,17 @@ class User extends  CI_Model
             'status' => '1',
         );
         $result = $this->db->get_where('users',$condition);
-        $num = $result->db->num_rows();
+        $num = $result->num_rows();
         if($num != 1){
             return false;
         }
-        $info = $result->db->row_array();
+        $info = $result->row_array();
         $info = self::show_user_info($info);
         return $info;
     }
     public function create_user_info($param)
     {
-        if(!isset($param['phone']) || !isset($param['user_pass_word'])
-        || !is_numeric($param['phone'])){
+        if(!isset($param['phone']) || !is_numeric($param['phone'])){
             return false;
         }
         $phone     = $param['phone'];
@@ -54,8 +68,8 @@ class User extends  CI_Model
         $uid       = self::get_user_id($phone);
         $sex       = isset($param['sex']) ? $param['sex'] : 0;
         $uname     = isset($param['user_name']) ? $param['user_name'] : 'soss';
-        $upassword = $param['user_pass_word'];
-        $group     = isset($param['group']) ? $param['group'] : 0;
+        $upassword = isset($param['password']) ? $param['password'] : '111111';
+        $group_id     = isset($param['group_id']) ? $param['group_id'] : 0;
         $condition = array(
             'phone'       => $phone,
             'status'      => $status,
@@ -63,7 +77,7 @@ class User extends  CI_Model
             'sex'         => $sex,
             'uname'       => $uname,
             'upassword'   => $upassword,
-            'group'       => $group,
+            'group_id'       => $group_id,
             'create_time' => date("Y-m-d H:i:s", time()),
             'update_time' => date("Y-m-d H:i:s", time()),
         );
@@ -87,19 +101,25 @@ class User extends  CI_Model
     public function update_user_info($user_id,$param)
     {
         $condition = [];
-        if(isset($param['phone'])){
+        if(isset($param['phone']) && !empty($param['phone'])){
             $condition['phone'] = $param['phone'];
         }
-        if(isset($param['user_name'])){
+        if(isset($param['user_name']) && !empty($param['user_name'])){
             $condition['uname'] = $param['user_name'];
         }
-        if(isset($param['sex'])){
+        if(isset($param['sex']) && !empty($param['sex'])){
+            if($param['sex'] == '女'){
+                $param['sex'] = 1;
+            }else{
+                $param['sex'] = 0;
+            }
             $condition['sex'] = $param['sex'];
         }
-        if(isset($param['group'])){
-            $condition['group'] = $param['group'];
+        if(isset($param['group_id']) && !empty($param['group_id'])){
+            $condition['group_id'] = $param['group_id'];
         }
-        if(isset($param['user_pass_word'])){
+
+        if(isset($param['user_pass_word']) && !empty($param['user_pass_word'])){
             $condition['upassword'] = $param['user_pass_word'];
         }
         $condition['update_time'] = date("Y-m-d H:i:s", time());
@@ -108,7 +128,6 @@ class User extends  CI_Model
         );
         $this->db->update('users', $condition, $where);
         $info = $this->get_user_info_by_user_id($user_id);
-        $info = self::show_user_info($info);
         return $info;
     }
     private static function get_user_id($phone)
@@ -124,11 +143,14 @@ class User extends  CI_Model
             'upassword' => $password,
         );
         $result = $this->db->get_where('users',$condition);
-        $num = $result->db->num_rows();
+        $num = $result->num_rows();
         if($num != 1){
             return false;
         }
-        $info = $result->db->row_array();
+        $info = $result->row_array();
+        if($info['status'] == 0){
+            return false;
+        }
         $info = self::show_user_info($info);
         return $info;
     }
@@ -136,15 +158,14 @@ class User extends  CI_Model
     {
         $condition = array(
             'phone'       => $phone,
-            'status'    => '1',
             'upassword' => $password,
         );
         $result = $this->db->get_where('users',$condition);
-        $num = $result->db->num_rows();
+        $num = $result->num_rows();
         if($num != 1){
             return false;
         }
-        $info = $result->db->row_array();
+        $info = $result->row_array();
         $info = self::show_user_info($info);
         return $info;
     }
@@ -152,9 +173,6 @@ class User extends  CI_Model
     {
         if(isset($info['upassword'])){
             unset($info['upassword']);
-        }
-        if(isset($info['status'])){
-            unset($info['status']);
         }
         if(isset($info['id'])){
             unset($info['id']);
@@ -165,6 +183,38 @@ class User extends  CI_Model
         if(isset($info['update_time'])){
             unset($info['update_time']);
         }
+        if($info['sex'] == 1){
+            $info['sex'] = '女';
+        }else{
+            $info['sex'] = '男';
+        }
+        return $info;
+    }
+    private static function show_users_info($infos)
+    {
+        if(empty($infos)){
+            return $infos;
+        }
+        foreach ($infos as $info) {
+            if (isset($info['upassword'])) {
+                unset($info['upassword']);
+            }
+            if (isset($info['id'])) {
+                unset($info['id']);
+            }
+            if (isset($info['create_time'])) {
+                unset($info['create_time']);
+            }
+            if (isset($info['update_time'])) {
+                unset($info['update_time']);
+            }
+            if($info['sex'] == 1){
+                $info['sex'] = '女';
+            }else{
+                $info['sex'] = '男';
+            }
+        }
+        return $infos;
     }
 
 }

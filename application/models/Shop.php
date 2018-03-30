@@ -13,59 +13,78 @@ class Shop extends  CI_Model
         parent::__construct();
         $this->load->database();
     }
-    public function get_user_info_by_user_id($user_id)
+    public function get_shops_info_by_sids($sids)
+    {
+
+        if(empty($sids)) {
+            return array();
+        }
+        $this->db->where_in('sid',$sids);
+        $this->db->where('status',1);
+        $result = $this->db->get('shops');
+        $num = $result->num_rows();
+        $infos = $result->result_array();
+        $infos = self::show_shops_info($infos);
+        return $infos;
+    }
+    public function get_shop_info_by_sid($sid)
     {
         $condition = array(
-            'uid'  => $user_id,
+            'sid'  => $sid,
             'status' => '1',
         );
-        $result = $this->db->get_where('users',$condition);
-        $num = $result->db->num_rows();
+        $result = $this->db->get_where('shops',$condition);
+        $num = $result->num_rows();
         if($num != 1){
             return false;
         }
-        $info = $result->db->row_array();
+        $info = $result->row_array();
+        $info = self::show_shop_info($info);
         return $info;
     }
-    public function get_user_info_by_phone($phone)
+    public function get_shop_info_by_uid($uid)
     {
         $condition = array(
-            'phone'  => $phone,
+            'uid'  => $uid,
             'status' => '1',
         );
-        $result = $this->db->get_where('users',$condition);
-        $num = $result->db->num_rows();
+        $result = $this->db->get_where('shops',$condition);
+        $num = $result->num_rows();
         if($num != 1){
             return false;
         }
-        $info = $result->db->row_array();
+        $info = $result->row_array();
+        $info = self::show_shop_info($info);
         return $info;
     }
-    public function create_user_info($param)
+    public function create_shop_info($param)
     {
-        if(!isset($param['phone']) || !isset($param['user_pass_word'])
-            || !is_numeric($param['phone'])){
+        if(!isset($param['uid'])){
             return false;
         }
         $phone     = $param['phone'];
         $status    = isset($param['status']) ? $param['status'] : 1;
-        $uid       = self::get_user_id($phone);
-        $sex       = isset($param['sex']) ? $param['sex'] : 0;
-        $uname     = isset($param['user_name']) ? $param['user_name'] : 'soss';
-        $upassword = $param['user_pass_word'];
-        $group     = isset($param['group']) ? $param['group'] : 0;
+        $sid       = self::get_shop_id($phone);
+        $uid       = $param['uid'];
+        $sname     = isset($param['shop_name']) ? $param['shop_name'] : 'soss';
+        $spassword = 'soss';
+        $business  = '1';
+        $address   = $param['address'];
         $condition = array(
             'phone'       => $phone,
             'status'      => $status,
             'uid'         => $uid,
-            'sex'         => $sex,
-            'uname'       => $uname,
-            'upassword'   => $upassword,
-            'group'       => $group,
+            'sid'         => $sid,
+            'sname'       => $sname,
+            'spassword'   => $spassword,
+            'business'    => $business,
+            'address'     => $address,
+            'available'   => 0,
+            'revenue'     => 0,
             'create_time' => date("Y-m-d H:i:s", time()),
             'update_time' => date("Y-m-d H:i:s", time()),
         );
-        $this->db->insert('users', $condition);
+        $this->db->insert('shops', $condition);
         return $condition;
     }
     public function cancellation_user_info($user_id)
@@ -81,35 +100,90 @@ class Shop extends  CI_Model
         $this->db->update('users', $condition, $where);
         return $user_id;
     }
-    public function update_user_info($user_id,$param)
+    public function update_shop_info($sid,$param)
     {
         $condition = [];
-        if(isset($param['phone'])){
+        if(isset($param['phone']) && !empty($param['phone'])){
             $condition['phone'] = $param['phone'];
         }
-        if(isset($param['user_name'])){
-            $condition['uname'] = $param['user_name'];
+        if(isset($param['sname']) && !empty($param['sname'])){
+            $condition['sname'] = $param['sname'];
         }
-        if(isset($param['sex'])){
-            $condition['sex'] = $param['sex'];
+        if(isset($param['address']) && !empty($param['address'])){
+            $condition['address'] = $param['address'];
         }
-        if(isset($param['group'])){
-            $condition['group'] = $param['group'];
-        }
-        if(isset($param['user_pass_word'])){
-            $condition['upassword'] = $param['user_pass_word'];
+        if(isset($param['business']) && !empty($param['business'])){
+            $condition['business'] = $param['business'];
         }
         $condition['update_time'] = date("Y-m-d H:i:s", time());
         $where     = array(
-            'uid'  => $user_id,
+            'sid'  => $sid,
         );
-        $this->db->update('users', $condition, $where);
-        $info = $this->get_user_info_by_user_id($user_id);
+        $this->db->update('shops', $condition, $where);
+        $info = $this->get_shop_info_by_sid($sid);
         return $info;
     }
-    private static function get_user_id($phone)
+    private static function get_shop_id($phone)
     {
         $uid = $phone.time();
         return $uid;
+    }
+    private static function show_shops_info($infos){
+        foreach ($infos as $info){
+            if(isset($info['spassword'])){
+                unset($info['spassword']);
+            }
+            if(isset($info['status'])){
+                unset($info['status']);
+            }
+            if(isset($info['id'])){
+                unset($info['id']);
+            }
+            if(isset($info['uid'])){
+                unset($info['uid']);
+            }
+            if(isset($info['available'])){
+                unset($info['available']);
+            }
+            if(isset($info['revenue'])){
+                unset($info['revenue']);
+            }
+            if(isset($info['create_time'])){
+                unset($info['create_time']);
+            }
+            if(isset($info['update_time'])){
+                unset($info['update_time']);
+            }
+        }
+        return $infos;
+    }
+    private static function show_shop_info($info){
+
+        if(isset($info['spassword'])){
+            unset($info['spassword']);
+        }
+        if(isset($info['status'])){
+            unset($info['status']);
+        }
+        if(isset($info['id'])){
+            unset($info['id']);
+        }
+        if(isset($info['uid'])){
+            unset($info['uid']);
+        }
+        if(isset($info['available'])){
+            unset($info['available']);
+        }
+        if(isset($info['revenue'])){
+            unset($info['revenue']);
+        }
+        if(isset($info['create_time'])){
+            unset($info['create_time']);
+        }
+        if(isset($info['update_time'])){
+            unset($info['update_time']);
+        }
+
+        return $info;
     }
 }

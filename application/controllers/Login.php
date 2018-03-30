@@ -10,6 +10,11 @@ class Login extends CI_Controller
 {
     public function index()
     {
-        $this->load->view('login');
+        $arguments = array_merge($this->input->post(),$this->input->get());
+        if(isset($arguments['flag'])){
+            $this->load->view('login');
+            return;
+        }
+        $this->load->view('welcome_message');
     }
 }

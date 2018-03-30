@@ -19,8 +19,8 @@ class Order extends  CI_Model
             'oid'  => $oid,
         );
         $result = $this->db->get_where('orders',$condition);
-        $num = $result->db->num_rows();
-        $infos = $result->db->row_array();
+        $num = $result->num_rows();
+        $infos = $result->row_array();
         $infos = self::show_ord_info($infos);
         return $infos;
     }
@@ -30,8 +30,8 @@ class Order extends  CI_Model
             'uid'  => $uid,
         );
         $result = $this->db->get_where('orders',$condition);
-        $num = $result->db->num_rows();
-        $infos = $result->db->row_array();
+        $num = $result->num_rows();
+        $infos = $result->row_array();
         $infos = self::show_ord_info($infos);
         return $infos;
     }
@@ -140,8 +140,12 @@ class Order extends  CI_Model
         $info = self::show_ord_info($info);
         return $info;
     }
+
     private static function show_ord_info($infos)
     {
+        if(empty($infos)){
+            return $infos;
+        }
         foreach ($infos as $info) {
             if (isset($info['id'])) {
                 unset($info['id']);
@@ -153,5 +157,6 @@ class Order extends  CI_Model
                 unset($info['update_time']);
             }
         }
+        return $infos;
     }
 }
