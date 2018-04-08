@@ -16,20 +16,20 @@
         })();
     </script>
 
-    <link href="https://www.meicanstatic.com/preorder/static/landing.123c8dae.css" rel="stylesheet"></head>
+    <link href="css/meicanLanding.css " rel="stylesheet"></head>
 <body>
 <div class="hero">
-    <img class="js-hero background"/>
+    <img class="js-hero background" src="css/landing_hero_mobile.6f9abb67.jpg">
     <div class="tagline">
         <div class="tagline-helper">
             <div class="tagline-helper-inner">
                 <!--[if IE 8]>
-                <img class="subtitle" src="https://www.meicanstatic.com/preorder/static/assets/landing_subtitle.864c4793.png" alt="忘记开会 / 忘记打卡 / 忘记密码" />
-                <img class="title" src="https://www.meicanstatic.com/preorder/static/assets/landing_title.407497d1.png" alt="从不忘美食" />
+                <img class="subtitle" src="css/landing_subtitle.864c4793.png" alt="忘记开会 / 忘记打卡 / 忘记密码" />
+                <img class="title" src="css/landing_title.407497d1.png" alt="从不忘美食" />
                 <![endif]-->
                 <![if !IE 8]>
-                <img class="subtitle" src="https://www.meicanstatic.com/preorder/static/assets/subtitle.0dc75e60.svg" alt="忘记开会 / 忘记打卡 / 忘记密码" />
-                <img class="title" src="https://www.meicanstatic.com/preorder/static/assets/title.8606eeb2.svg" alt="从不忘美食" />
+                <img class="subtitle" src="css/subtitle.0dc75e60.svg" alt="忘记开会 / 忘记打卡 / 忘记密码" />
+                <img class="title" src="css/title.8606eeb2.svg" alt="从不忘美食" />
                 <![endif]>
             </div>
         </div>
@@ -66,5 +66,5 @@
     <div class="title">美餐网 by dly</div>
     <div class="hr"></div>
 </div>
-<script type="text/javascript" src="https://www.meicanstatic.com/preorder/static/landing.00542686.js"></script><script type="text/javascript" src="https://www.meicanstatic.com/preorder/static/sentry.ce58845d.js"></script></body>
+<script type="text/javascript" src="css/landing.00542686.js"></script><script type="text/javascript" src="css/sentry.ce58845d.js"></script></body>
 </html>

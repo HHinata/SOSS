@@ -53,7 +53,7 @@
             <div class="form-group">
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="lastname"
-                           placeholder="name" name="sname">
+                           placeholder="name" name="shop_name">
                 </div>
             </div>
             <div class="form-group">

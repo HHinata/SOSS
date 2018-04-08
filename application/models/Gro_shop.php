@@ -23,7 +23,7 @@ class Gro_shop extends  CI_Model
         $result = $this->db->get_where('gro_shop',$condition);
         $num = $result->num_rows();
         $infos = $result->result_array();
-        foreach ($infos as $info){
+        foreach ($infos as &$info){
             $info = $info['sid'];
         }
         return $infos;

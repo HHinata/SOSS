@@ -18,7 +18,6 @@
     <link href="css/index.fa57cf2f.css" rel="stylesheet"></head>
 <body mc-main-directive="" class="ng-scope">
 
-
 <div ng-class="[
     styles.container,
     ctrl.size.single ? styles.mobile : '',
@@ -53,18 +52,9 @@
                             </div>
                             <div ng-class="styles.group" class="_2UigEaYqg_TEE1K979TvOl-style-group">
                                 <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">修改信息</div>
-                                <div mc-modal-me-item="" text="修改信息" on-click-item="ctrl.openModalBinding" href="/EditUser?gid=<?php echo $gid ?>&uid=<?php echo $user_info['uid']?>" class="ng-isolate-scope">
-                                    <a ng-class="styles.item" mc-click="onClick($event)" ng-href="" href="/EditUser?gid=<?php echo $gid ?>&uid=<?php echo $user_info['uid']?>" class="jJ_UGsU2MxEp9-XuX_b7U-style-item">
+                                <div mc-modal-me-item="" text="修改信息" on-click-item="ctrl.openModalBinding" href="/EditUser?uid=<?php echo $uid ?>&usertype=1" class="ng-isolate-scope">
+                                    <a ng-class="styles.item" mc-click="onClick($event)" ng-href="" href="/EditUser?uid=<?php echo $uid ?>&usertype=1" class="jJ_UGsU2MxEp9-XuX_b7U-style-item">
                                         <span class="ng-binding">修改信息</span>
-                                        <i ng-class="['icon',  customClass, iconClass]" mc-icon="" class-name="_2zn6BlloQejehRAwde1wBE-style-icon" which="arrow-right-digital-card" class="ng-isolate-scope icon  icon-arrow-right-digital-card _2zn6BlloQejehRAwde1wBE-style-icon"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div ng-class="styles.group" class="_2UigEaYqg_TEE1K979TvOl-style-group">
-                                <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">删除用户</div>
-                                <div ng-if="!ctrl.e.isMobile" mc-modal-me-item="" text="删除用户" href="/DeleteUser?gid=<?php echo $gid ?>&uid=<?php echo $user_info['uid']?>" class="ng-scope ng-isolate-scope">
-                                    <a ng-class="styles.item" ng-href="/DeleteUser?gid=<?php echo $gid ?>&uid=<?php echo $user_info['uid']?>" href="/DeleteUser?gid=<?php echo $gid ?>&uid=<?php echo $user_info['uid']?>" class="jJ_UGsU2MxEp9-XuX_b7U-style-item">
-                                        <span class="ng-binding">删除用户</span>
                                         <i ng-class="['icon',  customClass, iconClass]" mc-icon="" class-name="_2zn6BlloQejehRAwde1wBE-style-icon" which="arrow-right-digital-card" class="ng-isolate-scope icon  icon-arrow-right-digital-card _2zn6BlloQejehRAwde1wBE-style-icon"></i>
                                     </a>
                                 </div>
@@ -77,6 +67,7 @@
 </div>
 
 </body></html>
+
 
 
 
