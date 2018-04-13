@@ -29,7 +29,7 @@
     <div ng-class="styles.inner" class="_3Hwu_2GSDIciwZ-e4opE4y-style-inner" style="margin-top: 0px;">
         <div ng-class="styles.header" ng-show="title" class="_3_wSuLB2xzf6CLU1pfE3Z1-style-header">
             <div ng-class="styles.headerInner" class="ward56HhCdk0GZ-1MTcvO-style-headerInner">
-                <span ng-class="styles.title" class="ng-binding">用户信息</span>
+                <span ng-class="styles.title" class="ng-binding">商铺信息</span>
             </div>
         </div>
         <div ng-animate-children="" ng-class="[
@@ -39,21 +39,21 @@
                     <div ng-class="styles.container" mc-click="$event.stopPropagation()" class="_2zr0iYIKVbpdSwEMCUn83Q-style-container">
                         <div ng-class="styles.inner" class="_1Pe7GdQbdUNvrHqqjaEkWP-style-inner">
                             <div ng-class="styles.group" class="_2UigEaYqg_TEE1K979TvOl-style-group">
-                                <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">用户名称</div>
-                                <a ng-class="styles.item" class="jJ_UGsU2MxEp9-XuX_b7U-style-item"><?php echo $user_info['uname']?></a>
+                                <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">商铺名称</div>
+                                <a ng-class="styles.item" class="jJ_UGsU2MxEp9-XuX_b7U-style-item"><?php echo $shop_info['sname']?></a>
                             </div>
                             <div ng-class="styles.group" class="_2UigEaYqg_TEE1K979TvOl-style-group">
                                 <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">联系电话</div>
-                                <a ng-class="styles.item" class="jJ_UGsU2MxEp9-XuX_b7U-style-item"><?php echo $user_info['phone']?></a>
+                                <a ng-class="styles.item" class="jJ_UGsU2MxEp9-XuX_b7U-style-item"><?php echo $shop_info['phone']?></a>
                             </div>
                             <div ng-class="styles.group" class="_2UigEaYqg_TEE1K979TvOl-style-group">
-                                <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">性别</div>
-                                <a ng-class="styles.item" class="jJ_UGsU2MxEp9-XuX_b7U-style-item"><?php echo $user_info['sex']?></a>
+                                <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">地址</div>
+                                <a ng-class="styles.item" class="jJ_UGsU2MxEp9-XuX_b7U-style-item"><?php echo $shop_info['address']?></a>
                             </div>
                             <div ng-class="styles.group" class="_2UigEaYqg_TEE1K979TvOl-style-group">
-                                <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">修改密码</div>
-                                <div mc-modal-me-item="" text="修改信息" on-click-item="ctrl.openModalBinding" href="/EditUser?uid=<?php echo $uid ?>&usertype=1" class="ng-isolate-scope">
-                                    <a ng-class="styles.item" mc-click="onClick($event)" ng-href="" href="/EditUser?uid=<?php echo $uid ?>&usertype=1" class="jJ_UGsU2MxEp9-XuX_b7U-style-item">
+                                <div ng-class="styles.title" class="_2qB5iACcWxNybtA6D2bYR7-style-title">修改信息</div>
+                                <div mc-modal-me-item="" text="修改信息" on-click-item="ctrl.openModalBinding" href="/EditShopInfo?uid=<?php echo $uid ?>&usertype=2" class="ng-isolate-scope">
+                                    <a ng-class="styles.item" mc-click="onClick($event)" ng-href="" href="/EditShopInfo?uid=<?php echo $uid ?>&usertype=2" class="jJ_UGsU2MxEp9-XuX_b7U-style-item">
                                         <span class="ng-binding">点击修改</span>
                                         <i ng-class="['icon',  customClass, iconClass]" mc-icon="" class-name="_2zn6BlloQejehRAwde1wBE-style-icon" which="arrow-right-digital-card" class="ng-isolate-scope icon  icon-arrow-right-digital-card _2zn6BlloQejehRAwde1wBE-style-icon"></i>
                                     </a>

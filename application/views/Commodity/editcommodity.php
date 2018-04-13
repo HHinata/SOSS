@@ -56,8 +56,9 @@
                 <!-- /react-text -->
                 <!-- react-text: 11 -->
               <font style="vertical-align: inherit;">
-                <font style="vertical-align: inherit;">请输入修改的信息</font></font>
+                <font style="vertical-align: inherit;">请先输入修改后的菜品信息</font></font>
                 <!-- /react-text --></span>
+
           </span>
                 </div>
             </header>
@@ -66,26 +67,38 @@
                     <form name="loginForm" role="form" action="welcome" method="post">
                         <div class="Login__header___12Rnk">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">修改密码</font>
+                                <font style="vertical-align: inherit;">修改菜品</font>
                             </font>
                         </div>
                         <div class="Input__inputGroup___2_TNL">
                             <label class="Input__label___1zkjm undefined Input__isTwoLine___1qSB9">
                                  <span class="Input__labelText___3690B">
                                     <font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">原密码</font>
+                                        <font style="vertical-align: inherit;">名称</font>
                                     </font>
-                                 </span>
-                                <input type="password" class="Input__textInput___13McV" value="" name="pass"></label>
+                                </span>
+                                <input type="text" class="Input__textInput___13McV" value="" name="cname">
+                            </label>
                         </div>
                         <div class="Input__inputGroup___2_TNL">
                             <label class="Input__label___1zkjm undefined Input__isTwoLine___1qSB9">
-                                 <span class="Input__labelText___3690B">
+                                <span class="Input__labelText___3690B">
                                     <font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">新密码</font>
+                                        <font style="vertical-align: inherit;">描述</font>
                                     </font>
-                                 </span>
-                                <input type="password" class="Input__textInput___13McV" value="" name="user_pass_word"></label>
+                                </span>
+                                <input type="text" class="Input__textInput___13McV" value="" name="describes">
+                            </label>
+                        </div>
+                        <div class="Input__inputGroup___2_TNL">
+                            <label class="Input__label___1zkjm undefined Input__isTwoLine___1qSB9">
+                                <span class="Input__labelText___3690B">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">单价</font>
+                                    </font>
+                                </span>
+                                <input type="text" class="Input__textInput___13McV" value="" name="price">
+                            </label>
                         </div>
                         <div class="Input__inputGroup___2_TNL" style="text-align: center;">
                             <div class="Input__inputButtonGroup___MuHZ3">
@@ -136,7 +149,7 @@
 
 <script>
     function login() {
-        document.loginForm.action = "EditUser?flag=1&usertype=<?php echo $usertype?>&uid=<?php echo $uid ?>";
+        document.loginForm.action = "EditCommodity?flag=1&uid=<?php echo $uid?>&usertype=<?php echo $usertype?>&cid=<?php echo $cid?>&sid=<?php echo $sid?>";
         document.loginForm.submit();
     }
     function register() {

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="1c660ddb-3749-4c91-ae76-c60de1b510d9" name="pecado" url="http://172.22.32.116">
-        <fileTransfer host="172.22.32.116" port="22" rootFolder="/home/pecado/SOSS" accessType="SFTP">
+      <webServer id="1c660ddb-3749-4c91-ae76-c60de1b510d9" name="pecado" url="http://172.22.32.207/">
+        <fileTransfer host="172.22.32.207" port="22" rootFolder="/home/pecado/SOSS" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

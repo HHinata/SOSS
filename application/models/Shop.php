@@ -50,7 +50,7 @@ class Shop extends  CI_Model
         );
         $result = $this->db->get_where('shops',$condition);
         $num = $result->num_rows();
-        if($num != 1){
+        if($num == 0){
             return false;
         }
         $info = $result->row_array();

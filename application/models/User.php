@@ -17,7 +17,6 @@ class User extends  CI_Model
     {
         $condition = array(
             'uid'  => $user_id,
-            'status' => '1',
         );
         $result = $this->db->get_where('users',$condition);
         $num = $result->num_rows();
@@ -25,6 +24,9 @@ class User extends  CI_Model
             return false;
         }
         $info = $result->row_array();
+        if($info['status'] == 0){
+            return false;
+        }
         $info = self::show_user_info($info);
         return $info;
     }
@@ -195,7 +197,7 @@ class User extends  CI_Model
         if(empty($infos)){
             return $infos;
         }
-        foreach ($infos as $info) {
+        foreach ($infos as &$info) {
             if (isset($info['upassword'])) {
                 unset($info['upassword']);
             }

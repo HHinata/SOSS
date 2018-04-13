@@ -282,6 +282,81 @@
         <!-- ngIf: !ctrl.restaurant.isFetched -->
     </div>
 
+
+    <div class="_3fCj7L0_rHY5VUBqNEDKVo-style-container mc-animation-fade" mc-order-directive="" ng-if="ctrl.isShowOrder" style="opacity: 1;">
+        <div ng-class="styles.background" class="vNIQgBCNNZiTRdUMwsRkg-style-background"></div>
+        <div ng-class="[styles.header, styles[theme]]" class="js-fixed ng-scope Yh3fMd4XHSJ-0JKqhDWlz-style-header" mc-order-head="" ng-if="!ctrl.order.isPaymentNeed &amp;&amp; ctrl.order.list.length">
+            <div ng-class="styles.content" class="_3xdn6rl_R9wQ9zPehE630X-style-content">
+                <div ng-class="styles.time" ng-if="ctrl.order.time" class="ng-binding ng-scope _2FNUZ8AyVlbigYX9ad7Br-style-time">
+                </div>
+                <div ng-if="ctrl.isAlreay3s" ng-class="[styles.name, 'mc-animation-order-head-fade']" class="ng-binding ng-scope _2eDG60kgIhJjRBQ9V6Yomg-style-name mc-animation-order-head-fade" style="opacity: 1;">已下单</div>
+            </div>
+            <div ng-class="styles.more" mc-click="ctrl.openModalOrderActions()" ng-if="ctrl.isShowAction" class="ng-scope _3VgorfgHlZcxl0SABXaP_S-style-more">
+                <i ng-class="['icon',  customClass, iconClass]" mc-icon="" which="more" class="ng-isolate-scope icon  icon-more"></i>
+            </div>
+        </div>
+        <div ng-class="styles.block" ng-if="!ctrl.order.isPaymentNeed &amp;&amp; !ctrl.isShowCloset &amp;&amp; ctrl.order.list.length" mc-order-content-general="" class="ng-scope _2TEdJ_xaEuyHg6bMQ3lUhz-style-block">
+            <div ng-class="styles.background" class="_1vhAOipIZi7ZSnkr_-LTtv-style-background"></div>
+            <div class="_25RNQd66R3DrKKg3k25eOX-style-contentWrapper" mc-class="{[styles.removable]: ctrl.order.pickup.time || ctrl.order.readyToDelete}">
+                <div class="_3q3Iqavs1sGETWhVfgsg1_-style-contentInner">
+                    <div class="_3VJQSAKpOYNaOe5axFc6DR-style-content" ng-if="ctrl.order.status != 'DELETED'">
+                        <div class="_3Nf-pVvVaLHKzQMZd39eEn-style-title">ORDER</div>
+                        <div class="_1TGsDusKSscFMCkh6-x0EV-style-orderDishList">
+                            <div class="" ng-repeat="restaurant in ctrl.order.list track by $index">
+                                <div class="h87OzIx51tEqIC4GBrDVf-style-orderDish" tooltips="" tooltip-title="" tooltip-side="bottom" ng-repeat="dish in restaurant.dishes track by $index">
+                                    <span class="_3BGAO9u9rRNj_9aw3fWsDk-style-orderDishName">
+                                        <span class="yMhUDp0iJQWyJS_9IVZc-style-orderDishWording" title="<?php echo $ckddxz_info['cname']?>"><?php echo $ckddxz_info['cname']?></span>
+                                    </span>
+                                    <span class="_2e5wo5iWoTrIH3fA7K_dNt-style-orderDishNumber">
+                                        <span class="orderDishCount ng-binding">1份</span>
+                                        <span class="orderDishPrice ng-binding">已下单</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fading">
+                            <hr ng-class="styles.sepOrder" class="q8WXfd-OfWtbc34DzhhVf-style-sepOrder">
+
+                            <div ng-if="ctrl.isShowPickup" class="ng-scope">
+                                <div ng-class="[styles.takeFood, 'fading', 'cf']" mc-order-pickup="" class="ng-scope TKBLi0pqDCqSXlOnjGmdZ-style-takeFood fading cf">
+                                    <div ng-class="styles.number" ng-if="ctrl.order.pickup.code" class="ng-scope _1e_YtBFsOr5V9e1sMuPJj5-style-number">
+                                        <div ng-class="styles.square">
+                                            <span class="ng-binding"><?php echo $ckddxz_info['num']?></span>
+                                        </div>
+                                    </div>
+                                    <div ng-class="styles.text" class="LnE4qMrUunIzW4puKYCfe-style-text">
+                                        <span ng-if="ctrl.isTypeNormal" class="ng-scope">
+                                            <span ng-if="!ctrl.order.isUsingCloset" ng-class="styles.noticeWording" class="ng-binding ng-scope _1eMqoGfOO2e9OyBVnDQs2u-style-noticeWording">
+                                                取餐时，您可以从 「<?php echo $ckddxz_info['address']?>」的取餐处直接取到您的餐点。
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <hr ng-class="styles.sepOrder" class="q8WXfd-OfWtbc34DzhhVf-style-sepOrder">
+                            </div>
+                            <div ng-if="ctrl.order.progressList" class="ng-scope">
+                                <div ng-class="styles.block" mc-order-progress="" order="ctrl.order" class="ng-isolate-scope _3yeDhzGkuj8bS8XALUWpAO-style-block">
+                                    <div ng-repeat="day in days" ng-class="styles.day" class="ng-scope _3jxk9VEKynFj5qhf-JsD8W-style-day">
+                                        <div ng-class="styles.dayTime" class="_379kZ02ZCXidPWntGAmnDS-style-dayTime">
+                                            <span class="ng-binding"><?php echo $ckddxz_info['date']?></span>
+                                        </div>
+                                        <div ng-class="styles.progress" ng-repeat="item in day.items" class="ng-scope _2yzFHNOfySJtRxBKgK5uh6-style-progress">
+                                            <div ng-class="styles.timestamp" class="ng-binding xVS1qZ-uvz_EAXiacsCHE-style-timestamp"><?php echo $ckddxz_info['create_time']?></div>
+                                            <div ng-class="styles.actionWording" class="ng-binding _1iZR-0TQ6T4xz28jyJeyft-style-actionWording">您已下单。</div>
+                                        </div><!-- end ngRepeat: item in day.items -->
+                                    </div><!-- end ngRepeat: day in days -->
+                                </div>
+                            </div><!-- end ngIf: ctrl.order.progressList -->
+                        </div>
+                    </div><!-- end ngIf: ctrl.order.status != 'DELETED' -->
+                </div>
+            </div>
+        </div><!-- end ngIf: !ctrl.order.isPaymentNeed && !ctrl.isShowCloset && ctrl.order.list.length -->
+        <!-- ngIf: !ctrl.order.isPaymentNeed && ctrl.isShowCloset && ctrl.order.list.length -->
+        <!-- ngIf: !ctrl.order.list.length -->
+    </div>
+
     <!-- ngIf: ctrl.isShowDish -->
     <div ng-class="styles.container" mc-dish-directive="" ng-if="ctrl.isShowDish" class="ng-scope _1po2JRN2PMhBYoDFMakreW-style-container" id="three_list">
         <div ng-class="styles.background" class="_1QdDZpt-001WGzLoASvoqZ-style-background"></div>

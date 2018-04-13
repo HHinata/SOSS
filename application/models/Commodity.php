@@ -20,11 +20,11 @@ class Commodity extends  CI_Model
             'status' => '1',
         );
         $result = $this->db->get_where('commoditys',$condition);
-        $num = $result->db->num_rows();
+        $num = $result->num_rows();
         if($num != 1){
             return false;
         }
-        $info = $result->db->row_array();
+        $info = $result->row_array();
         $info = self::show_commodity_info($info);
         return $info;
     }
@@ -40,35 +40,30 @@ class Commodity extends  CI_Model
         $infos = self::show_commoditys_info($infos);
         return $infos;
     }
-    public function create_user_info($param)
+    public function create_commodity_info($param)
     {
-        if(!isset($param['phone']) || !isset($param['user_pass_word'])
-            || !is_numeric($param['phone'])){
-            return false;
-        }
-        $phone     = $param['phone'];
+        $uid       = $param['uid'];
         $status    = isset($param['status']) ? $param['status'] : 1;
-        $uid       = self::get_user_id($phone);
-        $sex       = isset($param['sex']) ? $param['sex'] : 0;
-        $uname     = isset($param['user_name']) ? $param['user_name'] : 'soss';
-        $upassword = $param['user_pass_word'];
-        $group     = isset($param['group']) ? $param['group'] : 0;
+        $cid       = self::get_co_id($param['phone']);
+        $cname     = isset($param['cname']) ? $param['cname'] : 'soss';
+        $sid       = $param['sid'];
+        $price     = $param['price'];
+        $describes = $param['describes'];
         $condition = array(
-            'phone'       => $phone,
             'status'      => $status,
-            'uid'         => $uid,
-            'sex'         => $sex,
-            'uname'       => $uname,
-            'upassword'   => $upassword,
-            'group'       => $group,
+            'cid'         => $cid,
+            'sid'         => $sid,
+            'cname'       => $cname,
+            'describes'   => $describes,
+            'price'       => $price,
             'create_time' => date("Y-m-d H:i:s", time()),
             'update_time' => date("Y-m-d H:i:s", time()),
         );
-        $this->db->insert('users', $condition);
-        $info = self::show_user_info($condition);
+        $this->db->insert('commoditys', $condition);
+        $info = self::show_commodity_info($condition);
         return $info;
     }
-    public function cancellation_user_info($user_id)
+    public function cancellation_commodity_info($cid)
     {
         $status = 0;
         $condition = array(
@@ -76,42 +71,62 @@ class Commodity extends  CI_Model
             'update_time' => date("Y-m-d H:i:s", time()),
         );
         $where     = array(
-            'uid'  => $user_id,
+            'cid'  => $cid,
         );
-        $this->db->update('users', $condition, $where);
-        return $user_id;
+        $this->db->update('commoditys', $condition, $where);
+        return $cid;
     }
-    public function update_user_info($user_id,$param)
+    public function off_commodity_info($cid)
+    {
+        $flag = 0;
+        $condition = array(
+            'flag'    => $flag,
+            'update_time' => date("Y-m-d H:i:s", time()),
+        );
+        $where     = array(
+            'cid'  => $cid,
+        );
+        $this->db->update('commoditys', $condition, $where);
+        return $cid;
+    }
+    public function on_commodity_info($cid)
+    {
+        $flag = 1;
+        $condition = array(
+            'flag'    => $flag,
+            'update_time' => date("Y-m-d H:i:s", time()),
+        );
+        $where     = array(
+            'cid'  => $cid,
+        );
+        $this->db->update('commoditys', $condition, $where);
+        return $cid;
+    }
+    public function update_commodity_info($cid,$param)
     {
         $condition = [];
-        if(isset($param['phone'])){
-            $condition['phone'] = $param['phone'];
+        if(isset($param['cname']) && !empty($param['cname'])){
+            $condition['cname'] = $param['cname'];
         }
-        if(isset($param['user_name'])){
-            $condition['uname'] = $param['user_name'];
+        if(isset($param['describes']) && !empty($param['describes'])){
+            $condition['describes'] = $param['describes'];
         }
-        if(isset($param['sex'])){
-            $condition['sex'] = $param['sex'];
-        }
-        if(isset($param['group'])){
-            $condition['group'] = $param['group'];
-        }
-        if(isset($param['user_pass_word'])){
-            $condition['upassword'] = $param['user_pass_word'];
+        if(isset($param['price']) && !empty($param['price'])){
+            $condition['price'] = $param['price'];
         }
         $condition['update_time'] = date("Y-m-d H:i:s", time());
         $where     = array(
-            'uid'  => $user_id,
+            'cid'  => $cid,
         );
-        $this->db->update('users', $condition, $where);
-        $info = $this->get_user_info_by_user_id($user_id);
-        $info = self::show_user_info($info);
+        $this->db->update('commoditys', $condition, $where);
+        $info = $this->get_commodity_info_by_c_id($cid);
+        $info = self::show_commodity_info($info);
         return $info;
     }
-    private static function get_user_id($phone)
+    private static function get_co_id($phone)
     {
-        $uid = $phone.time();
-        return $uid;
+        $cid = $phone.time();
+        return $cid;
     }
     public function login_uid($uid,$password)
     {
@@ -162,6 +177,7 @@ class Commodity extends  CI_Model
         if(isset($info['update_time'])){
             unset($info['update_time']);
         }
+        return $info;
     }
     private static function show_commoditys_info($infos)
     {

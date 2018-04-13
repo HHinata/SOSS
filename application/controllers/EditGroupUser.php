@@ -3,10 +3,10 @@
 /**
  * Created by PhpStorm.
  * User: Hinata
- * Date: 2018/3/23
- * Time: 15:18
+ * Date: 2018/4/11
+ * Time: 23:25
  */
-class AddCommodity extends CI_Controller
+class EditGroupUser extends CI_Controller
 {
     public function index()
     {
@@ -16,21 +16,22 @@ class AddCommodity extends CI_Controller
         $this->load->model('commodity');
         $this->load->helper('user');
         $help_user = new user_helper();
+        $staff_info = $this->user->get_user_info_by_user_id($arguments['staff_id']);
         if(!isset($arguments['flag'])){
             $data = array(
                 'uid'      => $arguments['uid'],
                 'usertype' => $arguments['usertype'],
-                'sid'      => $arguments['sid'],
+                'staff_id'      => $arguments['staff_id'],
+                'staff_info' => $staff_info,
             );
-            $this->load->view('Commodity/addcommodity',$data);
+            $this->load->view('Group/editgroupuser',$data);
             return;
         }
-       // echo json_encode($_SERVER);exit(0);
-       // redirect('/Welcome?uid='.$arguments['uid'],'refresh');
         $user_info = $this->user->get_user_info_by_user_id($arguments['uid']);
-        $arguments['phone'] = $user_info['phone'];
-        $data = $help_user->show_shop($user_info,$arguments);
-        $this->load->view('Shop/shopuserhome',$data);
+        $staff_info = $this->user->update_user_info($arguments['staff_id'],$arguments);
+        $arguments['userflag'] = 1;
+        $data = $help_user->show_group($user_info,$arguments);
+        $this->load->view('Group/groupuserhome',$data);
         return;
     }
 }
