@@ -11,10 +11,13 @@ class Login extends CI_Controller
     public function index()
     {
         $arguments = array_merge($this->input->post(),$this->input->get());
+        $data = array(
+            'message' => '',
+        );
         if(isset($arguments['flag'])){
-            $this->load->view('login');
+            $this->load->view('login',$data);
             return;
         }
-        $this->load->view('welcome_message');
+        $this->load->view('welcome_message',$data);
     }
 }

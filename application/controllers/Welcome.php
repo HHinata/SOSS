@@ -29,20 +29,24 @@ class Welcome extends CI_Controller {
         $this->load->model('commodity');
         $this->load->helper('user');
         $help_user = new user_helper();
-        $data = array();
+        $data = array(
+            'message' => '',
+        );
 
         if(isset($arguments['uid'])){
             $user_info = $this->user->get_user_info_by_user_id($arguments['uid']);
         }else {
-            if (!isset($arguments['phone']) || !isset($arguments['password'])) {
-                $this->load->view('login');
+            if (empty($arguments['phone']) || empty($arguments['password'])) {
+                $data['message'] = '请输入账号和密码';
+                $this->load->view('login',$data);
                 return;
             }
             $user_info = $this->user->login_phone($arguments['phone'],$arguments['password']);
         }
 
         if($user_info == false){
-            $this->load->view('login');
+            $data['message'] = '请输入正确的账号和密码';
+            $this->load->view('login',$data);
             return;
         }
         switch ($user_info['status']){
