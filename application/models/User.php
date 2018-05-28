@@ -72,6 +72,7 @@ class User extends  CI_Model
         $uname     = isset($param['user_name']) ? $param['user_name'] : 'soss';
         $upassword = isset($param['password']) ? $param['password'] : '111111';
         $group_id     = isset($param['group_id']) ? $param['group_id'] : 0;
+        $num = 'T'.rand(111,999);
         $condition = array(
             'phone'       => $phone,
             'status'      => $status,
@@ -79,7 +80,8 @@ class User extends  CI_Model
             'sex'         => $sex,
             'uname'       => $uname,
             'upassword'   => $upassword,
-            'group_id'       => $group_id,
+            'group_id'    => $group_id,
+            'num'         => $num,
             'create_time' => date("Y-m-d H:i:s", time()),
             'update_time' => date("Y-m-d H:i:s", time()),
         );

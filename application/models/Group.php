@@ -44,6 +44,21 @@ class Group extends  CI_Model
         $this->show_group($info);
         return $info;
     }
+    public function get_group_info_by_phone($phone)
+    {
+        $condition = array(
+            'phone'  => $phone,
+            'status' => '1',
+        );
+        $result = $this->db->get_where('groups',$condition);
+        $num = $result->num_rows();
+        if($num != 1){
+            return false;
+        }
+        $info = $result->row_array();
+        $this->show_group($info);
+        return $info;
+    }
     public function update_group_info($params)
     {
         $info = [];
@@ -88,7 +103,7 @@ class Group extends  CI_Model
     }
     public function create_group_info($param)
     {
-        if(!isset($param['phone']) || !isset($param['group_pass_word'])
+        if(!isset($param['phone']) || !isset($param['password'])
             || !is_numeric($param['phone'])){
             return false;
         }
@@ -96,19 +111,19 @@ class Group extends  CI_Model
         $status    = isset($param['status']) ? $param['status'] : 1;
         $gid       = self::get_group_id($phone);
         $gname     = isset($param['group_name']) ? $param['group_name'] : 'soss';
-        $gpassword = $param['group_pass_word'];
         $address   = isset($param['address']) ? $param['address'] : '';
+        $uid       = $param['uid'];
         $condition = array(
             'phone'       => $phone,
             'status'      => $status,
             'gid'         => $gid,
+            'uid'         => $uid,
             'gname'       => $gname,
-            'gpassword'   => $gpassword,
             'address'     => $address,
             'create_time' => date("Y-m-d H:i:s", time()),
             'update_time' => date("Y-m-d H:i:s", time()),
         );
-        $this->db->insert('users', $condition);
+        $this->db->insert('groups', $condition);
         return $condition;
     }
     public function cancellation_group_info($group_id)

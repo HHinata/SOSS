@@ -23,11 +23,19 @@ class user_helper
         $CI->load->model('commodity');
         $CI->load->model('ord_com');
 
-        if(!isset($arguments['orderflag'])){
-            $arguments['orderflag'] = 0;
-            $arguments['shopflag'] = 1;
+        if(!isset($arguments['groupflag'])){
+            if(!isset($arguments['orderflag'])){
+                $arguments['orderflag'] = 0;
+                $arguments['shopflag'] = 1;
+                $arguments['groupflag'] = 0;
+            }else{
+                $arguments['orderflag'] = 1;
+                $arguments['shopflag'] = 0;
+                $arguments['groupflag'] = 0;
+            }
         }else{
-            $arguments['orderflag'] = 1;
+            $arguments['groupflag'] = 1;
+            $arguments['orderflag'] = 0;
             $arguments['shopflag'] = 0;
         }
         if(!isset($arguments['date'])){
@@ -41,12 +49,22 @@ class user_helper
         $shop_info = $CI->shop->get_shop_info_by_uid($user_info['uid']);
         $commoditys_info = $CI->commodity->get_commoditys_info_by_s_id($shop_info['sid']);
         $orders_info = $CI->order->get_ord_info_by_sid_day($shop_info['sid'],date('Y-m-d H:i:s',strtotime(date('Y-m-d',strtotime('+'.$arguments['date'].' day')))));
+        $group_infos = $CI->gro_shop->get_group_list_by_sid($shop_info['sid']);
+
 
         $three_list_mark = 0;
         $cid = 0;
         $three_list_ord_mark = -1;
 
         //echo json_encode($orders_info);exit(0);
+
+        foreach ($group_infos as $key => $info){
+            $info = $CI->group->get_group_info_by_gid($info);
+            $info['xuanzhong'] = '';
+            $info['huise'] = '';
+            $info['price'] = $CI->order->get_price_by_gid_sid($info['gid'],$shop_info['sid']);
+            $group_infos[$key] = $info;
+        }
 
         foreach ($orders_info as $key => $info){
             $info['num'] = 'T558';
@@ -97,15 +115,25 @@ class user_helper
             $shop_info['gaoliang'] = ' qfiVW8RzFNvV_40DtFe2O-style-disabled';
             $shop_info['xuanzhong'] = ' _2peRTUx-l3u6QN18-rTwjp-style-active';
         }
+        $ckqyxz = '';
         $ckddxz = '';
         $three_list_top = '套餐';
         if(isset($arguments['orderflag']) && $arguments['orderflag'] == 1){ //选中查看订单
             $commoditys_info = [];
+            $group_infos = [];
             $ckddxz = '_2peRTUx-l3u6QN18-rTwjp-style-active';
             $three_list_top = '订单';
+        }else if(isset($arguments['groupflag']) && $arguments['groupflag'] == 1){ //选择查看企业
+            $orders_info = [];
+            $commoditys_info = [];
+            $ckqyxz = '_2peRTUx-l3u6QN18-rTwjp-style-active';
+            $three_list_top = '企业';
         }else{
             $orders_info = [];
+            $group_infos = [];
         }
+
+        //echo json_encode($group_infos);exit(0);
 
         //echo json_encode($orders_info);exit(0);
         $data = array(
@@ -123,8 +151,10 @@ class user_helper
             'three_list_ord_mark' => $three_list_ord_mark,//第三列订单是否有选中
             'cid'        => $cid,
             'ckddxz'     => $ckddxz,
+            'ckqyxz'     => $ckqyxz,
             'orders_info'=> $orders_info,
             'three_list_top' => $three_list_top,
+            'groups_info' => $group_infos,
         );
         //exit(0);
         return $data;
@@ -205,6 +235,7 @@ class user_helper
             }
             $staffs_info[$key] = $info;
         }
+        //echo json_encode($staffs_info);exit(0);
         foreach ($shop_info as $key => $info){
             $info['gaoliang'] = '';
             $info['xuanzhong'] = '';
@@ -246,6 +277,7 @@ class user_helper
             '/Welcome?userflag=1&flag=1&date=0&uid='.$user_info['uid'].'&usertype=3&user_num=',//点击员工
             'DeleteGroupUser?uid='.$user_info['uid'].'&usertype=3&staff_id='.$staff_id,//点击删除员工
             'EditGroupUser?uid='.$user_info['uid'].'&usertype=3&staff_id='.$staff_id,//点击修改员工
+            '/AddGroupShop?&uid='.$user_info['uid'].'&usertype=3&gid='.$group_info['gid'], //点击添加餐厅
         );
         $data = array(
             'uid'        => $user_info['uid'],
@@ -270,6 +302,7 @@ class user_helper
             'orders_info'=> $orders_info,
             'three_list_top' => $three_list_top,
             'onclick_url' => $onclick_url,
+            'addgroupshop' => 1,
         );
         //echo json_encode($staffs_info);exit(0);
         //exit(0);

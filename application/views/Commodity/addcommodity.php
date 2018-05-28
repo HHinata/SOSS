@@ -109,6 +109,7 @@
                                 </label>
                             </div>
                         </div>
+                        <font><font style="vertical-align: inherit;" color="red"><?php echo $message?></font></font>
                     </form>
                 </div>
             </div>

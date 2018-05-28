@@ -56,9 +56,8 @@
                 <!-- /react-text -->
                 <!-- react-text: 11 -->
               <font style="vertical-align: inherit;">
-                <font style="vertical-align: inherit;">请先输入修改后的菜品信息</font></font>
+                <font style="vertical-align: inherit;">请输入添加的员工信息</font></font>
                 <!-- /react-text --></span>
-
           </span>
                 </div>
             </header>
@@ -67,37 +66,17 @@
                     <form name="loginForm" role="form" action="welcome" method="post">
                         <div class="Login__header___12Rnk">
                             <font style="vertical-align: inherit;">
-                                <font style="vertical-align: inherit;">修改菜品</font>
+                                <font style="vertical-align: inherit;">添加合作餐厅</font>
                             </font>
                         </div>
                         <div class="Input__inputGroup___2_TNL">
                             <label class="Input__label___1zkjm undefined Input__isTwoLine___1qSB9">
-                                 <span class="Input__labelText___3690B">
-                                    <font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">名称</font>
-                                    </font>
-                                </span>
-                                <input type="text" class="Input__textInput___13McV" value="" name="cname">
-                            </label>
-                        </div>
-                        <div class="Input__inputGroup___2_TNL">
-                            <label class="Input__label___1zkjm undefined Input__isTwoLine___1qSB9">
                                 <span class="Input__labelText___3690B">
                                     <font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">描述</font>
+                                        <font style="vertical-align: inherit;">餐厅编号</font>
                                     </font>
                                 </span>
-                                <input type="text" class="Input__textInput___13McV" value="" name="describes">
-                            </label>
-                        </div>
-                        <div class="Input__inputGroup___2_TNL">
-                            <label class="Input__label___1zkjm undefined Input__isTwoLine___1qSB9">
-                                <span class="Input__labelText___3690B">
-                                    <font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">单价</font>
-                                    </font>
-                                </span>
-                                <input type="text" class="Input__textInput___13McV" value="" name="price">
+                                <input type="text" class="Input__textInput___13McV" value="" name="phone">
                             </label>
                         </div>
                         <div class="Input__inputGroup___2_TNL" style="text-align: center;">
@@ -105,7 +84,7 @@
                                 <label class="Input__label___1zkjm">
                                     <font style="vertical-align: inherit;">
                                         <font style="vertical-align: inherit;">
-                                            <input type="button"  onclick="login()" class="Input__buttonInput___2tH_z Input__isPrimary___31SHE Input__isBig___1ESLM" value="修改"></font>
+                                            <input type="button"  onclick="login()" class="Input__buttonInput___2tH_z Input__isPrimary___31SHE Input__isBig___1ESLM" value="添加"></font>
                                     </font>
                                 </label>
                             </div>
@@ -150,7 +129,7 @@
 
 <script>
     function login() {
-        document.loginForm.action = "EditCommodity?flag=1&uid=<?php echo $uid?>&usertype=<?php echo $usertype?>&cid=<?php echo $cid?>&sid=<?php echo $sid?>";
+        document.loginForm.action = "AddGroupShop?flag=1&uid=<?php echo $uid?>&usertype=3&gid=<?php echo $gid?>";
         document.loginForm.submit();
     }
     function register() {

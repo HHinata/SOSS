@@ -23,6 +23,16 @@ class EditGroupInfo extends CI_Controller
             $data = array(
                 'group_info' => $group_info,
                 'uid' => $arguments['uid'],
+                'message'  => '',
+            );
+            $this->load->view('Group/editgroupinfo',$data);
+            return;
+        }
+        if(empty($arguments['phone']) && empty($arguments['address']) && empty($arguments['gname'])){
+            $data = array(
+                'group_info' => $group_info,
+                'uid' => $arguments['uid'],
+                'message' => '请输入要修改的信息',
             );
             $this->load->view('Group/editgroupinfo',$data);
             return;

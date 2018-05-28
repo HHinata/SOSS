@@ -47,6 +47,8 @@
         <div class="actions-helper">
             <div class="actions-inner">
                 <a href="login?flag=1" class="btn login">登录</a>
+                <a href="RegisterGroup?flag=1" class="btn login">企业注册</a>
+                <a href="RegisterShop?flag=1" class="btn login">商户注册</a>
             </div>
         </div>
     </div>

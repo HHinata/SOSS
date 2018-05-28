@@ -86,6 +86,24 @@ class Order extends  CI_Model
         $infos = self::show_ord_info($infos);
         return $infos;
     }
+    public function get_price_by_gid_sid($gid,$sid)
+    {
+        $condition = array(
+            'gid'  => $gid,
+            'sid'  => $sid,
+            'flag' => 1,
+            'status' => 1,
+        );
+        $result = $this->db->get_where('orders',$condition);
+        $num = $result->num_rows();
+        $infos = $result->result_array();
+        $infos = self::show_ord_info($infos);
+        $price = 0;
+        foreach ($infos as $info){
+            $price += $info['price'];
+        }
+        return $price;
+    }
     public function get_ord_info_by_sid_day($sid,$date)
     {
         $condition = array(

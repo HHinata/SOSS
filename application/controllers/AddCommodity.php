@@ -21,14 +21,24 @@ class AddCommodity extends CI_Controller
                 'uid'      => $arguments['uid'],
                 'usertype' => $arguments['usertype'],
                 'sid'      => $arguments['sid'],
+                'message'  => '',
             );
             $this->load->view('Commodity/addcommodity',$data);
             return;
         }
-       // echo json_encode($_SERVER);exit(0);
-       // redirect('/Welcome?uid='.$arguments['uid'],'refresh');
+        if(empty($arguments['cname']) || empty($arguments['describes']) || empty($arguments['price'])){
+            $data = array(
+                'uid'      => $arguments['uid'],
+                'usertype' => $arguments['usertype'],
+                'sid'      => $arguments['sid'],
+                'message'  => '请输入名称、描述和价格',
+            );
+            $this->load->view('Commodity/addcommodity',$data);
+            return;
+        }
         $user_info = $this->user->get_user_info_by_user_id($arguments['uid']);
         $arguments['phone'] = $user_info['phone'];
+        $this->commodity->create_commodity_info($arguments);
         $data = $help_user->show_shop($user_info,$arguments);
         $this->load->view('Shop/shopuserhome',$data);
         return;

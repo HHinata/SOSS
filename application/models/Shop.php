@@ -57,6 +57,21 @@ class Shop extends  CI_Model
         $info = self::show_shop_info($info);
         return $info;
     }
+    public function get_shop_info_by_phone($phone)
+    {
+        $condition = array(
+            'phone'  => $phone,
+            'status' => '1',
+        );
+        $result = $this->db->get_where('shops',$condition);
+        $num = $result->num_rows();
+        if($num == 0){
+            return false;
+        }
+        $info = $result->row_array();
+        $info = self::show_shop_info($info);
+        return $info;
+    }
     public function create_shop_info($param)
     {
         if(!isset($param['uid'])){

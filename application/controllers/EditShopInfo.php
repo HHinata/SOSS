@@ -19,6 +19,16 @@ class EditShopInfo extends CI_Controller
             $data = array(
                 'shop_info' => $shop_info,
                 'uid' => $user_info['uid'],
+                'message' => '',
+            );
+            $this->load->view('Shop/editshopinfo',$data);
+            return;
+        }
+        if(empty($arguments['phone']) && empty($arguments['address']) && empty($arguments['sname'])){
+            $data = array(
+                'shop_info' => $shop_info,
+                'uid' => $user_info['uid'],
+                'message' => '请输入要修改的信息',
             );
             $this->load->view('Shop/editshopinfo',$data);
             return;

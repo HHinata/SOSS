@@ -456,6 +456,40 @@
         var element = document.getElementById("ShopList");
         element.appendChild(a);
     }
+    function addShop() {
+        var a = document.createElement("li");
+        a.setAttributeNode(add("ng-if", "ctrl.currentMeal.order"));
+        a.setAttributeNode(add("class", "F9ey8JgI2IoqPcogOQFwt-style-rest mc-animation-slide"));
+        a.setAttributeNode(add("ng-init", "isMouseOn = false;"));
+        a.setAttributeNode(add("ng-mouseover", "isMouseOn = true;"));
+        a.setAttributeNode(add("ng-mouseout", "isMouseOn = false;"));
+        a.setAttributeNode(add("mc-class", "{[styles.active]: ctrl.isOrderActive }"));
+
+        var b = document.createElement("a");
+        b.setAttributeNode(add("ng-href", "!ctrl.e.isMobile"));
+        b.setAttributeNode(add("href", "<?php echo $onclick_url[7]?>"));
+
+
+        var c = document.createElement("div");
+        c.setAttributeNode(add("class", "_3uNy7RgCOUcfFu6au1W54_-style-restInner"));
+
+        var d = document.createElement("span");
+        var node = document.createTextNode('添加餐厅');
+        d.appendChild(node);
+
+        var e = document.createElement("i");
+        e.setAttributeNode(add("ng-class", "{'icon-right_arrow': !isMouseOn &amp;&amp; !ctrl.isOrderActive,'icon-right_arrow_hover': isMouseOn &amp;&amp; !ctrl.isOrderActive,'icon-right_arrow_active': ctrl.isOrderActive}"));
+        e.setAttributeNode(add("class", "_149wo3vV6N64zC-afF4Q1V-style-rightIcon icon icon-right_arrow"));
+
+
+        c.appendChild(d);
+        c.appendChild(e);
+        b.appendChild(c);
+        a.appendChild(b);
+
+        var element = document.getElementById("ShopList");
+        element.appendChild(a);
+    }
     function buildShop(shop,num) {
         var a = document.createElement("li");
         a.setAttributeNode(add("ng-repeat", "restaurant in ctrl.restaurant.list track by $index"));
@@ -563,7 +597,7 @@
         var r = document.createElement("span");
         r.setAttributeNode(add("class", "_1XdGI6FaEB_-Y_HzjRuy8L-style-dishFree WYUX1iwW0a7mlumZV6n0H-style-dishPrice"));
         r.setAttributeNode(add("ng-show", "ctrl.currentMeal.free"));
-        var node3 = document.createTextNode('**');
+        var node3 = document.createTextNode('**'+commodity['price']);
         r.appendChild(node3);
         var s = document.createElement("div");
         s.setAttributeNode(add("class", "l4v0hBmwjNECjhQpsgYG2-style-dishCount"));
@@ -756,7 +790,7 @@
         var r = document.createElement("span");
         r.setAttributeNode(add("class", "_1XdGI6FaEB_-Y_HzjRuy8L-style-dishFree WYUX1iwW0a7mlumZV6n0H-style-dishPrice"));
         r.setAttributeNode(add("ng-show", "ctrl.currentMeal.free"));
-        var node3 = document.createTextNode('T558');
+        var node3 = document.createTextNode(user['num']);
         r.appendChild(node3);
         var s = document.createElement("div");
         s.setAttributeNode(add("class", "l4v0hBmwjNECjhQpsgYG2-style-dishCount"));
@@ -781,11 +815,15 @@
     var dingdanflag = <?php echo $chakandingdan?>;
     var addguflag = <?php echo $addgroupuser?>;
     var yuangongflag = <?php echo $chakanyuangong?>;
+    var addshopflag = <?php echo $addgroupshop?>;
     if(dingdanflag){
         chakandingdan();
     }
     if(addguflag){
         addGroupUser();
+    }
+    if(addshopflag){
+        addShop();
     }
     if(yuangongflag){
         chakanyuangong();
